@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct homePage: View {
-    @State private var isSearching = true
+    @State private var isSearching = false
     @State private var searchText = ""
     
     var body: some View {
@@ -16,6 +16,8 @@ struct homePage: View {
             HStack {
                 Spacer(minLength: 50)
                 Button(action: {
+                    isSearching.toggle()
+                    
                     if isSearching {
                         TextField("Search listings here...", text: $searchText)
                             .padding(7)
@@ -23,8 +25,12 @@ struct homePage: View {
                             .background(Color(.systemGray6))
                             .cornerRadius(8)
                             .padding(.horizontal, 10)
-                            
+                            .transition(.move(edge: .trailing))
+                            .onTapGesture {
+                                self.isSearching = true
                             }
+                            
+                        }
                          
                             //.animation(.default)
                             //Line 22: Apparently deprecated in iOS 15... lame. also can not figure out the withAnimation() method, as of April 3rd 2024 @ 21:33
@@ -71,7 +77,7 @@ struct homePage: View {
             HStack {
                 Spacer()
                 Button(action: {
-                    //no clue where to start
+                    imageView()
                 }, label: {
                     Rectangle()
                         .foregroundColor(.gray)

@@ -6,10 +6,12 @@
 
 
 import SwiftUI
+
+@main
 struct DormDashApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            loginPage()
         }
     }
 }

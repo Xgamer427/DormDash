@@ -13,8 +13,8 @@ struct loginPage: View {
     @State private var searchText2 = ""
     @State private var isSearching = false
     @State private var errorMessage = ""
-    private var username = ""
-    private var password = ""
+    private var username = "User"
+    private var password = "Password"
     var body: some View {
         VStack {
             TextField("Username", text: $searchText1)
@@ -37,10 +37,10 @@ struct loginPage: View {
                     self.isSearching = true
                 }
                 .transition(.move(edge: .trailing))
-            Text($errorMessage)
+            Text(errorMessage)
                 .foregroundColor(Color.red)
             Button(action: {
-                if($searchText1 == username && $searchText2 == password) {
+                if(searchText1 == username && searchText2 == password) {
                     homePage()
                 } else {
                     errorMessage = "Incorrect username or password"
