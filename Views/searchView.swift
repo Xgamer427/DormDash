@@ -27,7 +27,7 @@ struct searchView: View {
                 Spacer()
                 // Your content here
             }
-            .navigationBarTitle("Title")
+            .navigationBarTitle("Search Here")
             .navigationBarItems(trailing:
                 Button(action: {
                     withAnimation {

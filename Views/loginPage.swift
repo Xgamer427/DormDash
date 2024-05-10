@@ -15,6 +15,7 @@ struct loginPage: View {
     @State private var errorMessage = ""
     private var username = "User"
     private var password = "Password"
+    @State private var isCorrect = false
     var body: some View {
         VStack {
             TextField("Username", text: $searchText1)
@@ -41,12 +42,19 @@ struct loginPage: View {
                 .foregroundColor(Color.red)
             Button(action: {
                 if(searchText1 == username && searchText2 == password) {
-                    homePage()
+                    
+                    isCorrect = true
+                    
                 } else {
                     errorMessage = "Incorrect username or password"
                 }
+                
             }, label: {
                 Text("Login")
+            })
+            .sheet(isPresented: $isCorrect, onDismiss: {}, content: {
+                homePage()
+                    
             })
         }
     }

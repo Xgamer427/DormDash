@@ -5,37 +5,33 @@
 //  Created by Brandon Moffitt on 4/11/24.
 //
 
+import PhotosUI
 import SwiftUI
 
-struct ImagePicker: UIViewControllerRepresentable {
-    @Binding var selectedImage: UIImage?
-    @Environment(\.presentationMode) private var presentationMode
+struct ImagePicker:  View {
+    @State private var imageItem: PhotosPickerItem?
+    @State private var buttonImage: Image?
 
-    func makeUIViewController(context: Context) -> UIImagePickerController {
-        let picker = UIImagePickerController()
-        picker.delegate = context.coordinator
-        return picker
-    }
-
-    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-
-    class Coordinator: NSObject, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-        var parent: ImagePicker
-
-        init(_ parent: ImagePicker) {
-            self.parent = parent
-        }
-
-        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-            if let image = info[.originalImage] as? UIImage {
-                parent.selectedImage = image
+        var body: some View {
+            VStack {
+                PhotosPicker("Select image", selection: $imageItem, matching: .any(of: [.images, .not(.videos)]))
+                buttonImage?
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 150, height: 150)
             }
-            parent.presentationMode.wrappedValue.dismiss()
+            .onChange(of: imageItem) {
+                Task {
+                    if let loaded = try? await imageItem?.loadTransferable(type: Image.self) {
+                        buttonImage = loaded
+                    } else {
+                        print("Failed")
+                }
+            }
         }
     }
 }
 
+#Preview {
+    ImagePicker()
+}

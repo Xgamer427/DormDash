@@ -7,7 +7,7 @@
 import PhotosUI
 import SwiftUI
 
-struct homePage: View {
+struct profilePage: View {
     @State private var isSearching = false
     @State private var searchText = ""
     @State private var imageItem1: PhotosPickerItem?
@@ -18,7 +18,6 @@ struct homePage: View {
     @State private var buttonImage2: Image?
     @State private var buttonImage3: Image?
     @State private var buttonImage4: Image?
-    @State private var profilePageShown = false
     @State public var description1 = "This here is what we call placeholder text, and it is \nhere because I do not know what else to put for now"
     @State public var description2 = "This here is what we call placeholder text, and it is \nhere because I do not know what else to put for now"
     @State public var description3 = "This here is what we call placeholder text, and it is \nhere because I do not know what else to put for now"
@@ -26,7 +25,8 @@ struct homePage: View {
     
     var body: some View {
         VStack {
-            
+            Text("Profile")
+                .font(.title)
             VStack {
                 HStack {
                     Spacer(minLength: 325)
@@ -155,16 +155,10 @@ struct homePage: View {
                 }
                 Spacer()
                 
-                Button(action: {
-                    profilePageShown = true
-                }, label: {
-                    Image(systemName: "person.circle")
-                })
-                .sheet(isPresented: $profilePageShown, onDismiss: {}, content: {
-                    profilePage()
-                })
+                
+                    
             }
-                       
+            
         }
         /**
          HStack  {
